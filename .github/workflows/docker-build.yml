@@ -13,7 +13,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ vars.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_SECRET }}
+          password: ${{ secrets.gs }}
 
       - name: Docker build and push to docker hub
         uses: docker/build-push-action@v6
