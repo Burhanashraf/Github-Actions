@@ -1,23 +1,18 @@
-name: Docker build and push
+name: Deploy to GitHub Pages
 on:
- push:
-   branches: [main]
+  push:
+    branches: [main]
+
 jobs:
-  docker-build-and-push:
-     runs-on: ubuntu-latest
-     steps:
-      - name: checkout code
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Login to docker
-        uses: docker/login-action@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          username: ${{ vars.DOCKER_USERNAME }}
-          password: ${{ secrets.gs }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
 
-      - name: Docker build and push to docker hub
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: ${{ vars.DOCKER_USERNAME}}/github-actions-app:latest
